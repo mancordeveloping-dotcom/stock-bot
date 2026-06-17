@@ -4800,13 +4800,19 @@ async def health():
 
 @app.get("/")
 async def root():
-    return FileResponse(str(STATIC / "index.html"), headers=_NO_CACHE)
+    # Il sito attuale è v2: la home serve direttamente la versione nuova.
+    return FileResponse(str(STATIC / "v2.html"), headers=_NO_CACHE)
 
 
 @app.get("/v2")
 async def root_v2():
-    """Nuova edizione del sito (stile editoriale). Anteprima su /v2."""
     return FileResponse(str(STATIC / "v2.html"), headers=_NO_CACHE)
+
+
+@app.get("/old")
+async def root_old():
+    """Vecchia edizione del sito (conservata su /old)."""
+    return FileResponse(str(STATIC / "index.html"), headers=_NO_CACHE)
 
 
 @app.get("/landing")
